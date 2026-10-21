@@ -1,1 +1,247 @@
-1
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>图纸案例 · 小匠机电</title>
+<style>
+/* ========== 阿里巴巴普惠体 3.0 ========== */
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-45-Light/AlibabaPuHuiTi-3-45-Light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-55-Regular/AlibabaPuHuiTi-3-55-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-65-Medium/AlibabaPuHuiTi-3-65-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-75-SemiBold/AlibabaPuHuiTi-3-75-SemiBold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Alibaba PuHuiTi";
+  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-85-Bold/AlibabaPuHuiTi-3-85-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --ink: #1c1e21;
+  --ink-2: #5a616b;
+  --ink-3: #9aa1ab;
+  --line: #e8eaee;
+  --brand: #FF5F00;
+  --brand-deep: #D64E00;
+  --bg: #ffffff;
+  --bg-soft: #f6f8fc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Alibaba PuHuiTi";
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.8;
+  /* 微信内置浏览器：禁止字体自动放大 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 中文跨行断句规则：避免词组、标点在行首/行尾被拆开 */
+  line-break: strict;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  /* 微信点击高亮优化 */
+  -webkit-tap-highlight-color: rgba(255,95,0,.12);
+}
+
+/* 现代浏览器：避免单行孤词，排版更匀称 */
+p, h1, h2, .lead, .card-body, .hero .hello, .btn, .btn-note {
+  text-wrap: pretty;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+/* ========== 顶部导航 ========== */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.logo {
+  font-weight: 700; font-size: 19px; letter-spacing: .06em;
+  color: var(--ink); text-decoration: none;
+}
+.logo span { color: var(--brand); }
+.nav-right { font-weight: 400; font-size: 14px; color: var(--ink); letter-spacing: .04em; }
+
+/* ========== Hero ========== */
+.hero {
+  padding: 110px 0 90px;
+  background:
+    radial-gradient(700px 340px at 88% -10%, rgba(255,95,0,.07), transparent 65%),
+    radial-gradient(520px 300px at 0% 110%, rgba(255,95,0,.05), transparent 60%),
+    var(--bg);
+}
+.hero .hello {
+  display: inline-block;
+  font-weight: 500; font-size: clamp(22px, 3vw, 30px);
+  color: var(--brand);
+  background: rgba(255,95,0,.08);
+  border: 1px solid rgba(255,95,0,.16);
+  border-radius: 999px;
+  padding: 6px 26px;
+  margin-bottom: 28px;
+  letter-spacing: .08em;
+}
+.hero p.lead {
+  font-weight: 400;
+  font-size: clamp(16px, 1.6vw, 19px);
+  color: var(--ink-2);
+  max-width: 40em;
+}
+
+/* ========== 卡片 ========== */
+.card {
+  margin: 0 0 80px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.card-head {
+  padding: 40px 48px 0;
+}
+.tag {
+  font-weight: 500; font-size: 13px; color: var(--ink-3);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.card-head h2 {
+  font-weight: 600; font-size: clamp(21px, 2.4vw, 27px);
+  line-height: 1.5;
+}
+.card-body {
+  padding: 22px 48px 44px;
+  font-weight: 400; font-size: 16px; color: var(--ink-2);
+}
+
+/* ========== CTA ========== */
+.cta-row {
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 48px 44px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 500; font-size: 16px;
+  color: #fff; background: var(--brand);
+  text-decoration: none;
+  padding: 14px 34px;
+  border-radius: 12px;
+  transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+  touch-action: manipulation;
+  box-shadow: 0 6px 18px rgba(255,95,0,.22);
+}
+.btn svg { transition: transform .25s ease; }
+.btn:hover {
+  background: var(--brand-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(255,95,0,.30);
+}
+.btn:hover svg { transform: translate(3px, -3px); }
+
+/* ========== 底部 ========== */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 34px 0 40px;
+}
+.foot-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+.foot-inner .copy,
+.foot-inner .site { font-weight: 500; font-size: 14px; color: var(--ink); letter-spacing: .05em; }
+.foot-inner .site { text-decoration: none; font-size: 15px; }
+.foot-inner .site:hover { color: var(--brand); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  .hero { padding: 72px 0 60px; }
+  .card-head, .card-body, .cta-row { padding-left: 24px; padding-right: 24px; }
+  .card { border-radius: 16px; margin-bottom: 56px; }
+  .nav-right { display: none; }
+}
+</style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="logo" href="#">XJ MEP <span>小匠机电</span></a>
+      <div class="nav-right">机电图纸制作 | 专业设计服务</div>
+    </div>
+  </header>
+
+  <!-- 首屏问候 -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="hello">您好</span>
+            <p class="lead">这是一个和项目比较接近的图纸案例，供您参考。</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+
+    <!-- 案例卡片 -->
+    <section class="card">
+      <div class="card-head">
+                <h2>同类项目图纸案例</h2>
+      </div>
+      <div class="card-body">
+        该案例在业态构成、技术条件与出图深度上，均与当前洽谈项目较为接近，
+        可作为方案讨论与设计推进的参照依据。
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="case.pdf" target="_blank" rel="noopener">
+          请点击查看
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7M9 7h8v8"/>
+          </svg>
+        </a>
+              </div>
+    </section>
+
+  </main>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="wrap foot-inner">
+      <span class="copy">© 2026  XJ MEP 小匠机电</span>
+      <a class="site" href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>
