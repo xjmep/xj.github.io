@@ -2,246 +2,255 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>图纸实例 · 小匠机电</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面更新中</title>
 <style>
-/* ========== 阿里巴巴普惠体 3.0 ========== */
-@font-face {
-  font-family: "Alibaba PuHuiTi";
-  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-45-Light/AlibabaPuHuiTi-3-45-Light.woff2") format("woff2");
-  font-weight: 300; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Alibaba PuHuiTi";
-  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-55-Regular/AlibabaPuHuiTi-3-55-Regular.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Alibaba PuHuiTi";
-  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-65-Medium/AlibabaPuHuiTi-3-65-Medium.woff2") format("woff2");
-  font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Alibaba PuHuiTi";
-  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-75-SemiBold/AlibabaPuHuiTi-3-75-SemiBold.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Alibaba PuHuiTi";
-  src: url("https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-3-85-Bold/AlibabaPuHuiTi-3-85-Bold.woff2") format("woff2");
-  font-weight: 700; font-style: normal; font-display: swap;
-}
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap");
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-:root {
-  --ink: #1c1e21;
-  --ink-2: #5a616b;
-  --ink-3: #9aa1ab;
-  --line: #e8eaee;
-  --brand: #FF5F00;
-  --brand-deep: #D64E00;
-  --bg: #ffffff;
-  --bg-soft: #f6f8fc;
-}
+  html, body {
+    height: 100%;
+  }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Source Han Sans SC", "思源黑体", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #0f172a;
+    color: #e2e8f0;
+    position: relative;
+  }
 
-html { scroll-behavior: smooth; }
+  /* 网格纹理（细线，非渐变色） */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    pointer-events: none;
+  }
 
-body {
-  font-family: "Alibaba PuHuiTi";
-  background: var(--bg);
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  line-height: 1.8;
-  /* 微信内置浏览器：禁止字体自动放大 */
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  /* 中文跨行断句规则：避免词组、标点在行首/行尾被拆开 */
-  line-break: strict;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-  /* 微信点击高亮优化 */
-  -webkit-tap-highlight-color: rgba(255,95,0,.12);
-}
+  /* 漂浮的小圆点 */
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    animation: rise linear infinite;
+    opacity: 0;
+  }
 
-/* 现代浏览器：避免单行孤词，排版更匀称 */
-p, h1, h2, .lead, .card-body, .hero .hello, .btn, .btn-note {
-  text-wrap: pretty;
-}
+  @keyframes rise {
+    0%   { transform: translateY(0) scale(0.5); opacity: 0; }
+    15%  { opacity: 0.8; }
+    85%  { opacity: 0.5; }
+    100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+  }
 
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  /* 主内容 */
+  .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 28px;
+    max-width: 640px;
+    width: 100%;
+  }
 
-/* ========== 顶部导航 ========== */
-.nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(255,255,255,.86);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 68px;
-}
-.logo {
-  font-weight: 700; font-size: 19px; letter-spacing: .06em;
-  color: var(--ink); text-decoration: none;
-}
-.logo span { color: var(--brand); }
-.nav-right { font-weight: 400; font-size: 14px; color: var(--ink); letter-spacing: .04em; }
+  /* 齿轮图标 */
+  .icon-wrap {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 38px;
+  }
 
-/* ========== Hero ========== */
-.hero {
-  padding: 110px 0 90px;
-  background:
-    radial-gradient(700px 340px at 88% -10%, rgba(255,95,0,.07), transparent 65%),
-    radial-gradient(520px 300px at 0% 110%, rgba(255,95,0,.05), transparent 60%),
-    var(--bg);
-}
-.hero .hello {
-  display: inline-block;
-  font-weight: 500; font-size: clamp(22px, 3vw, 30px);
-  color: var(--brand);
-  background: rgba(255,95,0,.08);
-  border: 1px solid rgba(255,95,0,.16);
-  border-radius: 999px;
-  padding: 6px 26px;
-  margin-bottom: 28px;
-  letter-spacing: .08em;
-}
-.hero p.lead {
-  font-weight: 400;
-  font-size: clamp(16px, 1.6vw, 19px);
-  color: var(--ink-2);
-  max-width: 40em;
-}
+  .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px dashed rgba(129, 140, 248, 0.55);
+    animation: spin 12s linear infinite;
+  }
 
-/* ========== 卡片 ========== */
-.card {
-  margin: 0 0 80px;
-  background: var(--bg-soft);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr;
-}
-.card-head {
-  padding: 40px 48px 0;
-}
-.tag {
-  font-weight: 500; font-size: 13px; color: var(--ink-3);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.card-head h2 {
-  font-weight: 600; font-size: clamp(21px, 2.4vw, 27px);
-  line-height: 1.5;
-}
-.card-body {
-  padding: 22px 48px 44px;
-  font-weight: 400; font-size: 16px; color: var(--ink-2);
-}
+  .ring.inner {
+    inset: 22px;
+    border-style: solid;
+    border-color: rgba(236, 72, 153, 0.35);
+    border-top-color: rgba(236, 72, 153, 0.9);
+    animation: spin 2.4s linear infinite reverse;
+  }
 
-/* ========== CTA ========== */
-.cta-row {
-  display: flex; align-items: center; gap: 22px;
-  padding: 0 48px 44px;
-  flex-wrap: wrap;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-weight: 500; font-size: 16px;
-  color: #fff; background: var(--brand);
-  text-decoration: none;
-  padding: 14px 34px;
-  border-radius: 12px;
-  transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
-  touch-action: manipulation;
-  box-shadow: 0 6px 18px rgba(255,95,0,.22);
-}
-.btn svg { transition: transform .25s ease; }
-.btn:hover {
-  background: var(--brand-deep);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(255,95,0,.30);
-}
-.btn:hover svg { transform: translate(3px, -3px); }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
-/* ========== 底部 ========== */
-footer {
-  border-top: 1px solid var(--line);
-  padding: 34px 0 40px;
-}
-.foot-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 10px;
-}
-.foot-inner .copy,
-.foot-inner .site { font-weight: 500; font-size: 14px; color: var(--ink); letter-spacing: .05em; }
-.foot-inner .site { text-decoration: none; font-size: 15px; }
-.foot-inner .site:hover { color: var(--brand); }
+  .gear {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    animation: spin 6s linear infinite;
+    color: #a5b4fc;
+  }
 
-@media (max-width: 640px) {
-  .wrap { padding: 0 20px; }
-  body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
-  .hero { padding: 72px 0 60px; }
-  .card-head, .card-body, .cta-row { padding-left: 24px; padding-right: 24px; }
-  .card { border-radius: 16px; margin-bottom: 56px; }
-  .nav-right { display: none; }
-}
+  .gear svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* 标题（纯色） */
+  h1 {
+    font-size: clamp(32px, 7.5vw, 50px);
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    color: #e2e8f0;
+  }
+
+  /* 副标题 */
+  p.sub {
+    margin-top: 18px;
+    font-size: clamp(16px, 4.2vw, 20px);
+    color: #94a3b8;
+    letter-spacing: 1.5px;
+    line-height: 1.9;
+  }
+
+  /* 进度条（纯色） */
+  .progress {
+    margin: 42px auto 0;
+    width: min(320px, 78%);
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.18);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 40%;
+    border-radius: 999px;
+    background: #818cf8;
+    animation: slide 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes slide {
+    0%   { left: -40%; width: 40%; }
+    50%  { left: 30%;  width: 55%; }
+    100% { left: 100%; width: 40%; }
+  }
+
+  /* 三个跳动点 */
+  .loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .loading-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #818cf8;
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+
+  .loading-dots i:nth-child(2) { animation-delay: 0.18s; background: #c084fc; }
+  .loading-dots i:nth-child(3) { animation-delay: 0.36s; background: #f472b6; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.45; }
+    40%           { transform: translateY(-9px); opacity: 1; }
+  }
+
+  /* 底部提示 */
+  .footer-note {
+    margin-top: 50px;
+    font-size: 17px;
+    letter-spacing: 1px;
+    color: rgba(148, 163, 184, 0.55);
+  }
+
+  @media (max-width: 480px) {
+    .icon-wrap { width: 104px; height: 104px; margin-bottom: 30px; }
+    .gear { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
 </style>
 </head>
 <body>
 
-  <!-- 顶部导航 -->
-  <header class="nav">
-    <div class="wrap nav-inner">
-      <a class="logo" href="#">XJ MEP <span>小匠机电</span></a>
-      <div class="nav-right">机电图纸制作 | 专业设计服务</div>
-    </div>
-  </header>
+  <div class="grid-overlay"></div>
 
-  <!-- 首屏问候 -->
-  <section class="hero">
-    <div class="wrap">
-      <span class="hello">您好</span>
-            <p class="lead">这是一个和项目比较接近的图纸实例，供您参考，您可以下载保存。</p>
-    </div>
-  </section>
-
-  <main class="wrap">
-
-    <!-- 案例卡片 -->
-    <section class="card">
-      <div class="card-head">
-                <h2>同类项目图纸实例</h2>
+  <main class="container">
+    <div class="icon-wrap">
+      <div class="ring"></div>
+      <div class="ring inner"></div>
+      <div class="gear">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm0 5.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
+          <path d="M21.7 13.35l-1.63-.94a7.9 7.9 0 0 0 0-1.82l1.63-.94a.75.75 0 0 0 .27-1.02l-1.5-2.6a.75.75 0 0 0-1.02-.27l-1.63.94a7.9 7.9 0 0 0-1.58-.91V3.75a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75v1.88a7.9 7.9 0 0 0-1.58.91L8.53 5.6a.75.75 0 0 0-1.02.27l-1.5 2.6a.75.75 0 0 0 .27 1.02l1.63.94a7.9 7.9 0 0 0 0 1.82l-1.63.94a.75.75 0 0 0-.27 1.02l1.5 2.6a.75.75 0 0 0 1.02.27l1.63-.94c.48.38 1.01.68 1.58.91v1.88c0 .41.34.75.75.75h3c.41 0 .75-.34.75-.75v-1.88a7.9 7.9 0 0 0 1.58-.91l1.63.94a.75.75 0 0 0 1.02-.27l1.5-2.6a.75.75 0 0 0-.27-1.02Z" opacity=".55"/>
+        </svg>
       </div>
-      <div class="card-body">
-        该实例在业态构成、技术条件与出图深度上，均与当前洽谈项目较为接近，
-        在前期沟通中可作参考。
-      </div>
-      <div class="cta-row">
-        <a class="btn" href="examples.pdf" target="_blank" rel="noopener">
-          请点击查看
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7M9 7h8v8"/>
-          </svg>
-        </a>
-              </div>
-    </section>
+    </div>
 
+    <h1>页面更新中</h1>
+
+    <div class="progress"><span></span></div>
+    <div class="loading-dots"><i></i><i></i><i></i></div>
+
+    <div class="footer-note"><a href="https://www.xjmep.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">www.xjmep.com</a></div>
   </main>
 
-  <!-- 页脚 -->
-  <footer>
-    <div class="wrap foot-inner">
-      <span class="copy">© 2026  XJ MEP 小匠机电</span>
-      <a class="site" href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
-    </div>
-  </footer>
+  <script>
+    // 生成漂浮粒子
+    (function createDots() {
+      const count = window.innerWidth < 600 ? 14 : 26;
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('span');
+        const size = Math.random() * 3.5 + 1.5;
+
+        dot.className = 'dot';
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.bottom = '-10px';
+        dot.style.animationDuration = (Math.random() * 9 + 9) + 's';
+        dot.style.animationDelay = (Math.random() * 12) + 's';
+        dot.style.opacity = Math.random() * 0.5 + 0.2;
+
+        frag.appendChild(dot);
+      }
+      document.body.appendChild(frag);
+    })();
+  </script>
 
 </body>
 </html>
