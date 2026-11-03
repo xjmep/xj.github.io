@@ -2,64 +2,113 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="theme-color" content="#0f172a">
+<meta name="color-scheme" content="dark">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>页面更新中</title>
 
-<!-- 加载思源黑体 Web 字体（中文网字计划 CDN，SIL OFL 1.1 免费商用） -->
+<!-- 思源黑体 Web 字体（中文网字计划 CDN，SIL OFL 1.1 免费商用） -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/shs/dist/SourceHanSansSC-Regular/result.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/shs/dist/SourceHanSansSC-Medium/result.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/shs/dist/SourceHanSansSC-Bold/result.css">
 
 <style>
-  * {
+  *,
+  *::before,
+  *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-  html, body {
+  html {
     height: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
-    /* 仅使用思源黑体：优先 Web 字体，其次本地安装的思源黑体 */
-    font-family: "Source Han Sans SC", "Source Han Sans CN", "思源黑体", "SourceHanSansSC", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* 视口高度：先给旧浏览器 100vh，再给现代浏览器 dvh，最后兼容 iOS */
     min-height: 100vh;
-    overflow: hidden;
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    overflow-x: hidden;
+    overscroll-behavior: none;
     background: #0f172a;
     color: #e2e8f0;
     position: relative;
+
+    /* 字体：优先 Web 思源黑体，其次各手机系统自带黑体 */
+    font-family: "Source Han Sans SC", "Source Han Sans CN", "思源黑体",
+                 "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Hiragino Sans GB",
+                 "Microsoft YaHei", -apple-system, BlinkMacSystemFont,
+                 "Helvetica Neue", Arial, sans-serif;
+
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
   }
 
-  /* 网格纹理 */
+  /* 网格纹理（fixed，避免滚动时错位） */
   .grid-overlay {
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
     background-size: 48px 48px;
-    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
     -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
     pointer-events: none;
   }
 
-  /* 漂浮的小圆点 */
+  /* 粒子层 */
+  .dot-layer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
   .dot {
     position: absolute;
+    bottom: -10px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.6);
     opacity: 0;
     will-change: transform, opacity;
-    -webkit-animation: rise linear infinite;
-    animation: rise linear infinite;
+    -webkit-animation-name: rise;
+    animation-name: rise;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
   }
 
   @-webkit-keyframes rise {
@@ -80,13 +129,19 @@
   .container {
     position: relative;
     z-index: 2;
-    text-align: center;
-    padding: 40px 28px;
-    max-width: 640px;
     width: 100%;
+    max-width: 640px;
+    text-align: center;
+
+    /* 基础内边距 + 刘海屏 / 安全区适配 */
+    padding: 40px 24px;
+    padding-top: calc(40px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    padding-left: calc(24px + env(safe-area-inset-left, 0px));
+    padding-right: calc(24px + env(safe-area-inset-right, 0px));
   }
 
-  /* 齿轮图标 */
+  /* 图标区 */
   .icon-wrap {
     position: relative;
     width: 130px;
@@ -96,7 +151,10 @@
 
   .ring {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     border-radius: 50%;
     border: 2px dashed rgba(129, 140, 248, 0.55);
     will-change: transform;
@@ -105,7 +163,10 @@
   }
 
   .ring.inner {
-    inset: 22px;
+    top: 17%;
+    right: 17%;
+    bottom: 17%;
+    left: 17%;
     border-style: solid;
     border-color: rgba(236, 72, 153, 0.35);
     border-top-color: rgba(236, 72, 153, 0.9);
@@ -127,9 +188,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 52px;
-    height: 52px;
-    margin: -26px 0 0 -26px;
+    width: 40%;
+    height: 40%;
+    margin: -20% 0 0 -20%;
     color: #a5b4fc;
     will-change: transform;
     -webkit-animation: spin 6s linear infinite;
@@ -137,49 +198,42 @@
   }
 
   .gear svg {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
   }
 
-  /* 标题（纯色） */
+  /* 标题 */
   h1 {
-    font-size: clamp(32px, 7.5vw, 50px);
+    font-size: 40px;
+    font-size: clamp(28px, 7.5vw, 50px);
     font-weight: 700;
     letter-spacing: 2px;
     line-height: 1.5;
     color: #e2e8f0;
   }
 
-  /* 副标题 */
-  p.sub {
-    margin-top: 18px;
-    font-size: clamp(16px, 4.2vw, 20px);
-    font-weight: 400;
-    color: #94a3b8;
-    letter-spacing: 1.5px;
-    line-height: 1.9;
-  }
-
-  /* 进度条（纯色 + transform 动画） */
+  /* 进度条 */
   .progress {
-    margin: 42px auto 0;
+    position: relative;
+    width: 78%;
     width: min(320px, 78%);
     height: 4px;
+    margin: 42px auto 0;
     border-radius: 999px;
     background: rgba(148, 163, 184, 0.18);
     overflow: hidden;
-    position: relative;
   }
 
   .progress span {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
+    height: 100%;
     border-radius: 999px;
     background: #818cf8;
+    -webkit-transform-origin: left center;
     transform-origin: left center;
     will-change: transform;
     -webkit-animation: slideTransform 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
@@ -198,17 +252,26 @@
     100% { transform: translate3d(100%, 0, 0) scaleX(0.4); }
   }
 
-  /* 三个跳动点 */
+  /* 三个跳动点（用 margin 代替 gap，兼容旧内核） */
   .loading-dots {
+    display: -webkit-box;
+    display: -webkit-flex;
     display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
     justify-content: center;
-    gap: 8px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 14px;
     margin-top: 26px;
   }
 
   .loading-dots i {
+    display: block;
     width: 7px;
     height: 7px;
+    margin: 0 4px;
     border-radius: 50%;
     background: #818cf8;
     will-change: transform, opacity;
@@ -216,8 +279,17 @@
     animation: bounce 1.4s ease-in-out infinite;
   }
 
-  .loading-dots i:nth-child(2) { -webkit-animation-delay: 0.18s; animation-delay: 0.18s; background: #c084fc; }
-  .loading-dots i:nth-child(3) { -webkit-animation-delay: 0.36s; animation-delay: 0.36s; background: #f472b6; }
+  .loading-dots i:nth-child(2) {
+    background: #c084fc;
+    -webkit-animation-delay: 0.18s;
+    animation-delay: 0.18s;
+  }
+
+  .loading-dots i:nth-child(3) {
+    background: #f472b6;
+    -webkit-animation-delay: 0.36s;
+    animation-delay: 0.36s;
+  }
 
   @-webkit-keyframes bounce {
     0%, 80%, 100% { -webkit-transform: translate3d(0, 0, 0); opacity: 0.45; }
@@ -232,28 +304,95 @@
   /* 底部提示 */
   .footer-note {
     margin-top: 50px;
-    font-size: 17px;
+    font-size: 15px;
+    font-size: clamp(13px, 3.8vw, 17px);
     font-weight: 400;
     letter-spacing: 1px;
     color: rgba(148, 163, 184, 0.55);
   }
 
+  .footer-note a {
+    display: inline-block;
+    padding: 8px 6px;
+    color: inherit;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-transition: color 0.25s ease;
+    transition: color 0.25s ease;
+  }
+
+  .footer-note a:active {
+    color: rgba(165, 180, 252, 0.9);
+  }
+
+  /* ============ 屏幕适配 ============ */
+
+  /* 小屏手机 */
   @media (max-width: 480px) {
-    .icon-wrap { width: 104px; height: 104px; margin-bottom: 30px; }
-    .gear { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+    .container { padding-top: calc(28px + env(safe-area-inset-top, 0px)); padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+    .icon-wrap { width: 104px; height: 104px; margin-bottom: 28px; }
+    .progress { margin-top: 34px; }
+    .loading-dots { margin-top: 22px; }
+    .footer-note { margin-top: 38px; }
+  }
+
+  /* 超小屏 / 老款机型（iPhone SE 一代等） */
+  @media (max-width: 360px) {
+    .icon-wrap { width: 88px; height: 88px; margin-bottom: 22px; }
+    h1 { letter-spacing: 1px; }
+    .progress { margin-top: 28px; }
+    .footer-note { margin-top: 30px; }
+  }
+
+  /* 高度不足（横屏 / 小屏横持） */
+  @media (max-height: 600px) and (orientation: landscape) {
+    .container {
+      padding-top: calc(18px + env(safe-area-inset-top, 0px));
+      padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    }
+    .icon-wrap { width: 76px; height: 76px; margin-bottom: 16px; }
+    .progress { margin-top: 20px; }
+    .loading-dots { margin-top: 14px; }
+    .footer-note { margin-top: 20px; }
+  }
+
+  /* 矮屏竖向（微信聊天内小窗等） */
+  @media (max-height: 560px) and (orientation: portrait) {
+    .icon-wrap { width: 84px; height: 84px; margin-bottom: 20px; }
+    .progress { margin-top: 24px; }
+    .footer-note { margin-top: 26px; }
+  }
+
+  /* 尊重系统「减弱动态效果」设置 */
+  @media (prefers-reduced-motion: reduce) {
+    .dot-layer { display: none; }
+    .ring,
+    .ring.inner,
+    .gear,
+    .loading-dots i {
+      -webkit-animation: none !important;
+      animation: none !important;
+    }
+    .progress span {
+      -webkit-animation: none !important;
+      animation: none !important;
+      -webkit-transform: none !important;
+      transform: none !important;
+    }
   }
 </style>
 </head>
 <body>
 
-  <div class="grid-overlay"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="dot-layer" id="dot-layer" aria-hidden="true"></div>
 
   <main class="container">
-    <div class="icon-wrap">
+    <div class="icon-wrap" aria-hidden="true">
       <div class="ring"></div>
       <div class="ring inner"></div>
       <div class="gear">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm0 5.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
           <path d="M21.7 13.35l-1.63-.94a7.9 7.9 0 0 0 0-1.82l1.63-.94a.75.75 0 0 0 .27-1.02l-1.5-2.6a.75.75 0 0 0-1.02-.27l-1.63.94a7.9 7.9 0 0 0-1.58-.91V3.75a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75v1.88a7.9 7.9 0 0 0-1.58.91L8.53 5.6a.75.75 0 0 0-1.02.27l-1.5 2.6a.75.75 0 0 0 .27 1.02l1.63.94a7.9 7.9 0 0 0 0 1.82l-1.63.94a.75.75 0 0 0-.27 1.02l1.5 2.6a.75.75 0 0 0 1.02.27l1.63-.94c.48.38 1.01.68 1.58.91v1.88c0 .41.34.75.75.75h3c.41 0 .75-.34.75-.75v-1.88a7.9 7.9 0 0 0 1.58-.91l1.63.94a.75.75 0 0 0 1.02-.27l1.5-2.6a.75.75 0 0 0-.27-1.02Z" opacity=".55"/>
         </svg>
@@ -262,36 +401,74 @@
 
     <h1>页面更新中</h1>
 
-    <div class="progress"><span></span></div>
-    <div class="loading-dots"><i></i><i></i><i></i></div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <div class="loading-dots" aria-hidden="true"><i></i><i></i><i></i></div>
 
-    <div class="footer-note"><a href="https://www.xjmep.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">www.xjmep.com</a></div>
+    <div class="footer-note">
+      <a href="https://www.xjmep.com" target="_blank" rel="noopener noreferrer">www.xjmep.com</a>
+    </div>
   </main>
 
   <script>
-    // 生成漂浮粒子
-    (function createDots() {
-      const count = window.innerWidth < 600 ? 14 : 26;
-      const frag = document.createDocumentFragment();
+    (function () {
+      'use strict';
 
-      for (let i = 0; i < count; i++) {
-        const dot = document.createElement('span');
-        const size = Math.random() * 3.5 + 1.5;
-
-        dot.className = 'dot';
-        dot.style.width = size + 'px';
-        dot.style.height = size + 'px';
-        dot.style.left = Math.random() * 100 + '%';
-        dot.style.bottom = '-10px';
-        dot.style.animationDuration = (Math.random() * 9 + 9) + 's';
-        dot.style.webkitAnimationDuration = dot.style.animationDuration;
-        dot.style.animationDelay = (Math.random() * 12) + 's';
-        dot.style.webkitAnimationDelay = dot.style.animationDelay;
-        dot.style.opacity = Math.random() * 0.5 + 0.2;
-
-        frag.appendChild(dot);
+      /* 1. 尊重系统「减弱动态效果」——直接不生成粒子 */
+      var reduceMotion = false;
+      if (window.matchMedia) {
+        try {
+          reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch (e) {}
       }
-      document.body.appendChild(frag);
+      if (reduceMotion) return;
+
+      /* 2. 粒子数量按屏幕宽度与设备性能自动降级 */
+      var layer = document.getElementById('dot-layer');
+      if (!layer) return;
+
+      var w = window.innerWidth || document.documentElement.clientWidth || 375;
+      var cores = navigator.hardwareConcurrency || 4;
+
+      var count;
+      if (w < 380) {
+        count = 10;
+      } else if (w < 600) {
+        count = 14;
+      } else {
+        count = 26;
+      }
+      if (cores <= 4 && count > 14) count = 14;
+
+      /* 3. 延后到下一帧再生成，保证首屏文字优先渲染 */
+      function build() {
+        var frag = document.createDocumentFragment();
+        for (var i = 0; i < count; i++) {
+          var dot = document.createElement('span');
+          var size = Math.random() * 3.5 + 1.5;
+          var duration = (Math.random() * 9 + 9).toFixed(2) + 's';
+          var delay = (Math.random() * 12).toFixed(2) + 's';
+
+          dot.className = 'dot';
+          dot.style.width = size.toFixed(2) + 'px';
+          dot.style.height = size.toFixed(2) + 'px';
+          dot.style.left = (Math.random() * 100).toFixed(2) + '%';
+          dot.style.webkitAnimationDuration = duration;
+          dot.style.animationDuration = duration;
+          dot.style.webkitAnimationDelay = delay;
+          dot.style.animationDelay = delay;
+
+          frag.appendChild(dot);
+        }
+        layer.appendChild(frag);
+      }
+
+      if (window.requestAnimationFrame) {
+        requestAnimationFrame(function () {
+          setTimeout(build, 60);
+        });
+      } else {
+        setTimeout(build, 120);
+      }
     })();
   </script>
 
