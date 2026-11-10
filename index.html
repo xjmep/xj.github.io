@@ -7,15 +7,12 @@
 <title>机电图纸制作 | 专业设计服务</title>
 
 <!--
-  字体：思源宋体 / 思源黑体（Source Han Serif SC / Source Han Sans SC）
+  字体：思源黑体（Source Han Sans SC）
   授权：SIL Open Font License 1.1 (OFL 1.1)
   允许免费商用、网页嵌入与再分发；须保留本版权声明，不得单独售卖字体文件。
   © 2014–2021 Adobe, Reserved Font Name "Source Han Sans"
-  © 2017–2021 Adobe, Reserved Font Name "Source Han Serif"
   https://github.com/adobe-fonts/source-han-sans
-  https://github.com/adobe-fonts/source-han-serif
 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-serif-sc-vf/font.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-sans-sc-vf/font.css">
 
 <style>
@@ -26,28 +23,35 @@
     --ink:#000000;
     --paper:#FFFFFF;
     --ink-soft:#9A5B00;
+    /* 字重层级：标题 700，正文比标题小两号 = 500 */
+    --fw-title:700;
+    --fw-body:500;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
   body{
-    font-family:"Source Han Serif SC","思源宋体",serif;
+    font-family:"Source Han Sans SC","思源黑体","Noto Sans SC",sans-serif;
+    font-weight:var(--fw-body);
     background:var(--paper);
     color:var(--ink);
     line-height:1.7;
     overflow-x:hidden;
   }
 
+  /* 标题类：统一使用标题字重 */
   h1,h2,h3,h4,
-  .sec-title,.cta,footer,footer small,
-  .preview-hint{
-    font-family:"Source Han Sans SC","思源黑体",sans-serif;
+  .sec-title,
+  .contact-cta,
+  #qr-modal p,
+  footer{
+    font-weight:var(--fw-title);
   }
 
   section{max-width:1080px;margin:0 auto;padding:70px 20px;}
   #detail{padding-bottom:10px;}
   .contact-sec{padding-bottom:30px;}
   .sec-title{
-    display:inline-block;background:var(--bg);color:#000000;font-weight:900;
+    display:inline-block;background:var(--bg);color:#000000;
     font-size:clamp(1.25rem,4.5vw,2.2rem);padding:6px 24px;letter-spacing:.08em;
     max-width:100%;border-radius:14px;
   }
@@ -59,7 +63,7 @@
     transition:.25s;
   }
   .card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(243,156,18,.35);}
-  .card h3{font-size:1.1rem;font-weight:800;color:var(--ink-soft);}
+  .card h3{font-size:1.1rem;color:var(--ink-soft);}
   .card p{margin-top:10px;color:#000000;font-size:.95rem;}
 
   .detail-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
@@ -70,13 +74,13 @@
   .card-link{display:block;text-decoration:none;color:inherit;}
   .preview-hint{
     display:block;
-    font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
+    font-size:.8em;font-weight:var(--fw-body);color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
   .contact-sec{text-align:center;padding-top:0;}
   .contact-cta{
     display:inline-block;margin-top:40px;padding:14px 48px;background:#000000;color:var(--bg);
-    font-size:1.15rem;font-weight:800;letter-spacing:.2em;border-radius:999px;
+    font-size:1.15rem;letter-spacing:.2em;border-radius:999px;
     text-decoration:none;transition:.25s;cursor:pointer;border:none;white-space:nowrap;
   }
   .contact-cta:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.3);}
@@ -90,7 +94,7 @@
     max-width:90vw;
   }
   #qr-modal img{width:min(280px,70vw);border-radius:10px;}
-  #qr-modal p{margin-top:14px;font-weight:800;color:#000000;font-size:1.05rem;}
+  #qr-modal p{margin-top:14px;color:#000000;font-size:1.05rem;}
   #qr-modal .close{
     position:absolute;top:8px;right:16px;font-size:1.6rem;cursor:pointer;color:#000000;
     background:none;border:none;
@@ -98,9 +102,12 @@
 
   footer{
     background:#000000;color:var(--bg);text-align:center;padding:46px 20px;
-    font-weight:800;letter-spacing:.1em;font-size:1.05rem;
+    letter-spacing:.1em;font-size:1.05rem;
   }
-  footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:.85rem;}
+  footer small{
+    display:block;margin-top:10px;color:#FFFFFF;
+    font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;
+  }
 
   @media(max-width:600px){
     section{padding:56px 16px;}
