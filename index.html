@@ -7,15 +7,40 @@
 <title>机电图纸制作 | 专业设计服务</title>
 
 <!--
-  字体：思源黑体（Source Han Sans SC）
+  字体：思源黑体 Source Han Sans CN（自托管）
   授权：SIL Open Font License 1.1 (OFL 1.1)
   允许免费商用、网页嵌入与再分发；须保留本版权声明，不得单独售卖字体文件。
   © 2014–2021 Adobe, Reserved Font Name "Source Han Sans"
   https://github.com/adobe-fonts/source-han-sans
+
+  自托管文件（与本 HTML 同目录下的 fonts 文件夹）：
+    fonts/SourceHanSansCN-Regular.woff2  → 正文 / 页脚正文（400）
+    fonts/SourceHanSansCN-Bold.woff2     → 标题 / 页脚（700）
+
+  子集外文字兜底：
+    自托管字体为子集字体。当页面出现子集外的文字时，浏览器会按 font-family
+    字体栈自动向后寻找「同名（同款）字体」的网络版本加载对应字符，
+    无需改动本文件。网络字体仅在真正用到缺失字符时才会下载相应分片。
 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-sans-sc-vf/font.css">
 
 <style>
+
+  /* ============ 自托管思源黑体 ============ */
+  @font-face{
+    font-family:"Source Han Sans CN";
+    src:url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Source Han Sans CN";
+    src:url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
 
   :root{
     --bg:#F79F19;
@@ -23,14 +48,18 @@
     --ink:#000000;
     --paper:#FFFFFF;
     --ink-soft:#9A5B00;
-    /* 字重层级：标题 700，正文比标题小两号 = 500 */
+
+    /* 字体栈：自托管思源黑体优先；其后为网络同名字体（仅兜底子集外文字） */
+    --font-cn:"Source Han Sans CN","Source Han Sans SC VF","Source Han Sans SC","Noto Sans SC",sans-serif;
+
+    /* 字重层级：标题用 Bold，正文用 Regular */
     --fw-title:700;
-    --fw-body:500;
+    --fw-body:400;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
   body{
-    font-family:"Source Han Sans SC","思源黑体","Noto Sans SC",sans-serif;
+    font-family:var(--font-cn);
     font-weight:var(--fw-body);
     background:var(--paper);
     color:var(--ink);
@@ -38,12 +67,13 @@
     overflow-x:hidden;
   }
 
-  /* 标题类：统一使用标题字重 */
+  /* 标题类：统一使用 Bold */
   h1,h2,h3,h4,
   .sec-title,
   .contact-cta,
   #qr-modal p,
   footer{
+    font-family:var(--font-cn);
     font-weight:var(--fw-title);
   }
 
@@ -63,18 +93,18 @@
     transition:.25s;
   }
   .card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(243,156,18,.35);}
+
+  /* 卡片内文字层级：标题 1.1rem / 正文 0.98rem / 预览提示 0.88rem */
   .card h3{font-size:1.1rem;color:var(--ink-soft);}
-  .card p{margin-top:10px;color:#000000;font-size:.95rem;}
+  .card p{margin-top:10px;color:#000000;font-size:.98rem;}
 
   .detail-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
   .detail-grid .card{padding:20px 18px;}
-  .detail-grid .card h3{font-size:1rem;}
-  .detail-grid .card p{font-size:.88rem;}
 
   .card-link{display:block;text-decoration:none;color:inherit;}
   .preview-hint{
     display:block;
-    font-size:.8em;font-weight:var(--fw-body);color:#8a5100;letter-spacing:.05em;margin-top:2px;
+    font-size:.88rem;font-weight:var(--fw-body);color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
   .contact-sec{text-align:center;padding-top:0;}
@@ -97,16 +127,18 @@
   #qr-modal p{margin-top:14px;color:#000000;font-size:1.05rem;}
   #qr-modal .close{
     position:absolute;top:8px;right:16px;font-size:1.6rem;cursor:pointer;color:#000000;
-    background:none;border:none;
+    background:none;border:none;font-family:var(--font-cn);
   }
 
   footer{
     background:#000000;color:var(--bg);text-align:center;padding:46px 20px;
     letter-spacing:.1em;font-size:1.05rem;
+    font-family:var(--font-cn);
   }
   footer small{
     display:block;margin-top:10px;color:#FFFFFF;
     font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;
+    font-family:var(--font-cn);
   }
 
   @media(max-width:600px){
